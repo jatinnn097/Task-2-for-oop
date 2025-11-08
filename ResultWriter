@@ -1,0 +1,20 @@
+package StudentExamScoreLogger;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class ResultWriter {
+    private final String file;
+
+    public ResultWriter(String file) {
+        this.file = file;
+    }
+
+    public synchronized void saveRecord(StudentData student) {
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write(student.formatAsCSV() + System.lineSeparator());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
